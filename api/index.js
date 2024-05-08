@@ -22,6 +22,11 @@ const options = {
   },
 };
 app.use(cors(options));
+
+app.get('/api',(req,res)=>{
+  res.send('Esto es una api de prueba en express')
+})
+
 routerApi(app);
 
 app.use(LogError);
