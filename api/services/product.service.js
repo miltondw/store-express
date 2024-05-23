@@ -1,26 +1,27 @@
-const PRODUCTS = require('../MOCK/PRODUCTS.json');
 const boom = require('@hapi/boom');
-const pool = require('../libs/postgres');
+// const sequelize = require('../libs/sequelize');
+const { models } = require('../libs/sequelize');
 class ProductsService {
-  constructor() {
-    this.products = PRODUCTS;
-    this.pool = pool;
-    this.pool.on('error', (err) => console.error(err));
-  }
+  constructor() {}
   async getAll(limit) {
-    const query = `SELECT * FROM products limit ${limit} `;
-    const rta = await this.pool.query(query);
-    // const products = PRODUCTS.slice(0, limit);
-    const products = rta.rows||[];
-    products.unshift({ total: products.length });
+    /* const query = `SELECT * FROM products limit ${limit} `;
+    * Get con el método client de pg
+    const rta = await this.pool.query(query); 
+    * Get con datos quemados de MOCK
+    const products = PRODUCTS.slice(0, limit);
+    * Get con sequelize query
+    const [data] = await sequelize.query(query); */
+
+    const products = await models.Product.findAll({ limit });
     if (products.length === 0) {
       throw boom.notFound('There are no products');
     }
+    products.unshift({ total: products.length });
     return products;
   }
 
   async getOne(id) {
-    const productoId = PRODUCTS.find((productoId) => productoId.id == id);
+    const productoId = await models.Product.findByPk(id);
     if (!productoId) {
       throw boom.notFound('product with id:' + id + ' not found');
     }
@@ -28,40 +29,23 @@ class ProductsService {
   }
 
   async create(data) {
-    const newProduct = {
-      ...data,
-      id: this.products.length + 1,
-    };
-    if (Object.values(data).length === 0) this.products.push(newProduct);
-    return newProduct;
+    return await models.Product.create(data);
   }
 
   async update(id, data) {
-    const product = await this.getOne(id);
-    if (product) {
-      this.products[Number(id) - 1] = {
-        ...data,
-        id: id,
-      };
-    }
-    return product;
+    await models.Product.update(data, { where: { id } });
   }
 
   async patch(id, data) {
-    const product = await this.getOne(id);
-
-    if (product) {
-      this.products[Number(id) - 1] = {
-        ...product,
-        ...data,
-        id: id,
-      };
-    }
-    return product;
+    await models.Product.update(data, { where: { id } });
   }
 
   async delete(id) {
-    return this.products.splice(Number(id) - 1, 1);
+    return await models.Product.destroy({
+      where: {
+        id,
+      },
+    });
   }
 }
 module.exports = ProductsService;
