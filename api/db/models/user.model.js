@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize');
 const USER_TABLE = 'users';
 const UserSchema = {
   id: {
@@ -13,12 +13,16 @@ const UserSchema = {
   createdAt: {
     type: DataTypes.DATE,
     field: 'created_at',
-    defaultValue: DataTypes.NOW,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false,
   },
   updatedAt: {
     type: DataTypes.DATE,
     field: 'updated_at',
-    defaultValue: DataTypes.NOW,
+    defaultValue: Sequelize.literal(
+      'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+    ),
+    allowNull: false,
   },
 };
 class User extends Model {

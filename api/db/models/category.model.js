@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes,Sequelize } = require('sequelize');
 const CATEGORY_TABLE = 'categories';
 const CategorySchema = {
   id: {
@@ -24,13 +24,15 @@ const CategorySchema = {
   createdAt: {
     type: DataTypes.DATE,
     field: 'created_at',
-    defaultValue: DataTypes.NOW,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false
   },
   updatedAt: {
     type: DataTypes.DATE,
     field: 'updated_at',
-    defaultValue: DataTypes.NOW,
-  },
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+    allowNull: false
+  }
 };
 class Category extends Model {
   static associate() {}
