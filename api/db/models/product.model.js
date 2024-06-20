@@ -49,16 +49,16 @@ const ProductSchema = {
     defaultValue:true
   },
   createdAt: {
+    allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at',
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    allowNull: false
+    defaultValue: Sequelize.NOW,
   },
   updatedAt: {
+    allowNull: false,
     type: DataTypes.DATE,
     field: 'updated_at',
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-    allowNull: false
+    defaultValue: Sequelize.NOW,
   }
 
 };

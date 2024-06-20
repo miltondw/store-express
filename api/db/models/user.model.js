@@ -9,24 +9,38 @@ const UserSchema = {
   },
   email: { allowNull: false, type: DataTypes.STRING, unique: true },
   password: { allowNull: false, type: DataTypes.STRING },
-  role: { allowNull: false, type: DataTypes.STRING,defaultValue:'costumer' },
+  role: { allowNull: false, type: DataTypes.STRING, defaultValue: 'customer' },
   createdAt: {
+    allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at',
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    allowNull: false,
+    defaultValue: Sequelize.NOW,
   },
   updatedAt: {
+    allowNull: false,
     type: DataTypes.DATE,
     field: 'updated_at',
-    defaultValue: Sequelize.literal(
-      'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-    ),
-    allowNull: false,
-  },
+    defaultValue: Sequelize.NOW,
+  }
+  // createdAt: {
+  //   type: DataTypes.DATE,
+  //   field: 'created_at',
+  //   defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  //   allowNull: false,
+  // },
+  // updatedAt: {
+  //   type: DataTypes.DATE,
+  //   field: 'updated_at',
+  //   defaultValue: Sequelize.literal(
+  //     'CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
+  //   ),
+  //   allowNull: false,
+  // },
 };
 class User extends Model {
-  static associate() {}
+  static associate(models) {
+    this.hasOne(models.Customer, { as: 'customer', foreignKey: 'userId' });
+  }
   static config(sequelize) {
     return {
       sequelize,

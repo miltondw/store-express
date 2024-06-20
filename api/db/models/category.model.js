@@ -9,6 +9,7 @@ const CategorySchema = {
   },
   name: {
     type: DataTypes.STRING,
+    unique: true,
     allowNull: false,
     validate: {
       len: [3, 15], // La longitud del nombre debe estar entre 3 y 15 caracteres
@@ -22,16 +23,16 @@ const CategorySchema = {
     },
   },
   createdAt: {
+    allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at',
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    allowNull: false
+    defaultValue: Sequelize.NOW,
   },
   updatedAt: {
+    allowNull: false,
     type: DataTypes.DATE,
     field: 'updated_at',
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-    allowNull: false
+    defaultValue: Sequelize.NOW,
   }
 };
 class Category extends Model {

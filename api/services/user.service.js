@@ -3,7 +3,7 @@ const { models } = require('../libs/sequelize');
 class UsersService {
   constructor() {}
   async getAll(limit) {
-    const users = await models.User.findAll({ limit });
+    const users = await models.User.findAll({ limit,include:['customer'] });
     if (users.length === 0) {
       throw boom.notFound('There are no users');
     }
