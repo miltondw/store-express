@@ -12,6 +12,6 @@ const URI = `mysql://root:admin123@localhost:3306/my_store`;
 const sequelize = new Sequelize(URI, { dialect: 'mysql'});
 
 setupModel(sequelize)
-sequelize.sync()
+// sequelize.sync()
 
 module.exports = sequelize;
