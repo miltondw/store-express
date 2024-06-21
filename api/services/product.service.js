@@ -4,6 +4,7 @@ const { models } = require('../libs/sequelize');
 class ProductsService {
   constructor() {}
   async getAll(limit) {
+    const limitNumber=Number(limit)
     /* const query = `SELECT * FROM products limit ${limit} `;
     * Get con el método client de pg
     const rta = await this.pool.query(query); 
@@ -12,7 +13,10 @@ class ProductsService {
     * Get con sequelize query
     const [data] = await sequelize.query(query); */
 
-    const products = await models.Product.findAll({ limit });
+    const products = await models.Product.findAll({
+      limitNumber,
+      include: ['category'],
+    });
     if (products.length === 0) {
       throw boom.notFound('There are no products');
     }
@@ -21,7 +25,7 @@ class ProductsService {
   }
 
   async getOne(id) {
-    const productoId = await models.Product.findByPk(id);
+    const productoId = await models.Product.findByPk(id,{include: ['category']});
     if (!productoId) {
       throw boom.notFound('product with id:' + id + ' not found');
     }

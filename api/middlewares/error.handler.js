@@ -1,4 +1,4 @@
-const { ValidationError } = require("sequelize");
+const { ValidationError } = require('sequelize');
 
 function LogError(err, req, res, next) {
   console.log('error');
@@ -6,20 +6,27 @@ function LogError(err, req, res, next) {
   next(err);
 }
 function SequelizeErrors(err, req, res, next) {
-  if(err instanceof ValidationError){
+  if (err instanceof ValidationError) {
     res.status(409).json({
       status: '409',
       message: err.name,
       errors: err.errors,
     });
   }
-  next(err)
+  next(err);
 }
 
 function BoomErrorHandler(err, req, res, next) {
   console.log('BoomErrorHandler');
   if (err.isBoom) {
     res.status(err.output.statusCode).json(err.output.payload);
+  } else if (err instanceof ForeignKeyConstraintError && err.isBoom) {
+    res.status(409).json({
+      status: '409',
+      message: err.name,
+      errors: err.errors,
+      err
+    });
   } else {
     next(err);
   }
