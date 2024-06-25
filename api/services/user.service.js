@@ -12,11 +12,11 @@ class UsersService {
   }
 
   async getOne(id) {
-    const productoId = await models.User.findByPk(id);
-    if (!productoId) {
-      throw boom.notFound('product with id:' + id + ' not found');
+    const userId = await models.User.findByPk(id);
+    if (!userId) {
+      throw boom.notFound('User with id:' + id + ' not found');
     }
-    return productoId;
+    return userId;
   }
 
   async create(data) {

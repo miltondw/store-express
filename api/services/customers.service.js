@@ -1,33 +1,42 @@
 const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
-class CustomerService {
+class CustomersService {
   constructor() {}
-  async find() {
-    const rta = await models.Customer.findAll({ include: ['user'] });
-    return rta;
-  }
-  async findOne(id) {
-    const user = await models.Customer.findByPk(id);
-    if (!user) {
-      throw boom.notFound('customer not found');
+  async getAll(limit) {
+    const customer = await models.Customer.findAll({ limit,include:['user'] });
+    if (customer.length === 0) { 
+      throw boom.notFound('There are no customer');
     }
-    return user;
+    customer.unshift({ total: customer.length });
+    return customer;
   }
+
+  async getOne(id) {
+    const customerId = await models.Customer.findByPk(id,{ include:['user'] });
+    if (!customerId) {
+      throw boom.notFound('Customer with id:' + id + ' not found');
+    }
+    return customerId;
+  }
+
   async create(data) {
-    const newCustomer = await models.Customer.create(data, {
-      include: ['user'],
-    });
-    return newCustomer;
+    return await models.Customer.create(data);
   }
-  async update(id, changes) {
-    const model = await this.findOne(id);
-    const rta = await model.update(changes);
-    return rta;
+
+  async update(id, data) {
+    await models.Customer.update(data, { where: { id } });
   }
+
+  async patch(id, data) {
+    await models.Customer.update(data, { where: { id } });
+  }
+
   async delete(id) {
-    const model = await this.findOne(id);
-    await model.destroy();
-    return { rta: true };
+    return await models.Customer.destroy({
+      where: {
+        id,
+      },
+    });
   }
 }
-module.exports = CustomerService;
+module.exports = CustomersService;

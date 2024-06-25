@@ -1,11 +1,12 @@
 const express = require('express');
 const routerApi = require('./routes');
 const cors = require('cors');
+
 const {
-  LogError,
-  SequelizeErrors,
-  ErrorHandler,
-  BoomErrorHandler,
+  logErrors,
+  errorHandler,
+  boomErrorHandler,
+  ormErrorHandler,
 } = require('./middlewares/error.handler');
 
 const app = express();
@@ -29,19 +30,21 @@ app.use(cors(options));
 
 app.use(cors());
 
-app.get('/',(req,res)=>{
-  res.send('Esto es una api de prueba en express rutas:api/v1/ products,users,categories')
-})
-app.get('/api',(req,res)=>{
-  res.send('Esto es una api de prueba en express')
-})
+app.get('/', (req, res) => {
+  res.send(
+    'Esto es una api de prueba en express rutas:api/v1/ products,users,categories',
+  );
+});
+app.get('/api', (req, res) => {
+  res.send('Esto es una api de prueba en express');
+});
 
 routerApi(app);
 
-app.use(LogError);
-app.use(SequelizeErrors);
-app.use(BoomErrorHandler);
-app.use(ErrorHandler);
+app.use(logErrors);
+app.use(ormErrorHandler);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
