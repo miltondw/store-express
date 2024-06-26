@@ -4,9 +4,8 @@ const service = new ProductsService();
 
 const findAll = async (req, res, next) => {
   try {
-    const limit = req.query?.size || 10;
-    const products = await service.getAll(limit);
-    res.json(products);
+    const products = await service.getAll(req.query);
+    res.json(products); 
   } catch (error) {
     next(error);
   }

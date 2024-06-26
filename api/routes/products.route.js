@@ -4,6 +4,7 @@ const {
   createProductSchema,
   getProductSchema,
   updateProductSchema,
+  queryProductSchema
 } = require('../schemas/product.schema');
 const {
   findAll,
@@ -16,7 +17,7 @@ const {
 
 const router = express.Router();
 
-router.get('/', findAll);
+router.get('/',validatorHandler(queryProductSchema, 'query'), findAll);
 router.get('/:id', validatorHandler(getProductSchema, 'params'), findOne);
 router.post('/', validatorHandler(createProductSchema, 'body'), save);
 router.put(
