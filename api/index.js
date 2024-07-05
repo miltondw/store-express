@@ -1,13 +1,13 @@
 const express = require('express');
 const routerApi = require('./routes');
 const cors = require('cors');
-
 const {
   logErrors,
   errorHandler,
   boomErrorHandler,
   ormErrorHandler,
 } = require('./middlewares/error.handler');
+const { checkApiKey } = require('./middlewares/auth.handler');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -30,12 +30,12 @@ app.use(cors(options));
 
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/',  (req, res) => {
   res.send(
     'Esto es una api de prueba en express rutas:api/v1/ products,users,categories',
   );
 });
-app.get('/api', (req, res) => {
+app.get('/api', checkApiKey, (req, res) => {
   res.send('Esto es una api de prueba en express');
 });
 

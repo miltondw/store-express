@@ -1,8 +1,8 @@
 'use strict';
-const { UserSchema, USER_TABLE } = require('../models/user.model');
-const { ProductSchema, PRODUCT_TABLE } = require('../models/product.model');
-const { CategorySchema, CATEGORY_TABLE } = require('../models/category.model');
-const { CustomerSchema, CUSTOMER_TABLE } = require('../models/customer.model');
+const { UserSchema, USER_TABLE } = require('../../user/user.model');
+const { ProductSchema, PRODUCT_TABLE } = require('../../product/product.model');
+const { CategorySchema, CATEGORY_TABLE } = require('../../category/category.model');
+const { CustomerSchema, CUSTOMER_TABLE } = require('../../customer/customer.model');
 // * Comando para crear la migración
 // npm run migrations:generate create-tables
 module.exports = {
