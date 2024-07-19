@@ -6,7 +6,7 @@ const findAll = async (req, res, next) => {
   try {
     const limit = req.query?.size || 10;
     const orders = await service.getAll(limit);
-    if (Object.keys(orders).length === 0) {
+    if (!!Object.keys(orders).length === 0) {
       res.status(404).json({
         message: 'no hay ordenes',
         data: { orders },
@@ -16,7 +16,7 @@ const findAll = async (req, res, next) => {
     }
 
 
-    if(orders.Object.entries.length === 0){
+    if(!!orders.Object.entries.length === 0){
       res.status(404).json({
         message: 'no hay ordenes',
         data: { newOrder },

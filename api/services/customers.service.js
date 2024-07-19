@@ -4,7 +4,7 @@ class CustomersService {
   constructor() {}
   async getAll(limit) {
     const customer = await models.Customer.findAll({ limit,include:['user'] });
-    if (customer.length === 0) { 
+    if (!!customer.length === 0) { 
       throw boom.notFound('There are no customer');
     }
     customer.unshift({ total: customer.length });
