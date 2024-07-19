@@ -2,7 +2,7 @@ const boom = require('@hapi/boom');
 // const sequelize = require('../libs/sequelize');
 const {
   models
-} = require('../libs/sequelize');
+} = require('../../libs/sequelize');
 const { Op } = require('sequelize');
 class ProductsService {
   constructor() {}

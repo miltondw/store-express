@@ -1,10 +1,10 @@
 const express=require('express')
 
-const productsRouter=require('./product/products.route')
-const usersRouter=require('./user/users.route')
-const customerRouter=require('./customer/customers.route')
-const categoriesRouter=require('./category/categories.route')
-const ordersRouter=require('./order/order.route')
+const productsRouter=require('./components/product/products.route')
+const usersRouter=require('./components/user/users.route')
+const customerRouter=require('./components/customer/customers.route')
+const categoriesRouter=require('./components/category/categories.route')
+const ordersRouter=require('./components/order/order.route')
 
 const routerApi=(app)=>{
     const router=express.Router()
