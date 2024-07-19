@@ -4,7 +4,7 @@ class OrdersService {
   constructor() { }
   async getAll(limit) {
     const orders = await models.Order.findAll({ limit });
-    if (orders.length === 0) {
+    if (!!orders.length === 0) {
       throw boom.notFound('There are no orders');
     }
     orders.unshift({ total: orders.length });
@@ -18,7 +18,10 @@ class OrdersService {
           association: 'customer',
           include: ['user'],
         },
-        'items',
+        {
+          association: 'items',
+          include: ['category'],
+        },
       ],
     });
     if (!orderId) {

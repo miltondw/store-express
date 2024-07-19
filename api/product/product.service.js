@@ -40,7 +40,7 @@ class ProductsService {
       };
     }
     const products = await models.Product.findAll(options);
-    if (products.length === 0) {
+    if (!!products.length === 0) {
       throw boom.notFound('There are no products');
     }
     products.unshift({

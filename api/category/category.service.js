@@ -4,7 +4,7 @@ class CategoriesService {
   constructor() {}
   async getAll(limit) {
     const categories = await models.Category.findAll({ limit });
-    if (categories.length === 0) {
+    if (!!categories.length === 0) {
       throw boom.notFound('There are no categories');
     }
     categories.unshift({ total: categories.length });
