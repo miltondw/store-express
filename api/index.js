@@ -1,3 +1,4 @@
+require('module-alias/register');
 const express = require('express');
 const routerApi = require('./routes');
 const cors = require('cors');
@@ -29,6 +30,8 @@ app.use(cors(options));
 */
 
 app.use(cors());
+require('./utils/auth')
+// require('./utils/auth/jwtTest')
 
 app.get('/',  (req, res) => {
   res.send(
