@@ -16,7 +16,7 @@ const findAll = async (req, res, next) => {
     }
 
 
-    if(!!orders.Object.entries.length === 0){
+    if(!!orders.Object?.entries.length === 0){
       res.status(404).json({
         message: 'no hay ordenes',
         data: { newOrder },

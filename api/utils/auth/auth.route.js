@@ -15,8 +15,8 @@ router.post(
         expiresIn: '7d',
       };
       const payload = {
-        sub: '1',
-        role: 'customer',
+        sub:user.id,
+        role: user.role,
       };
       const token = jwt.sign(payload, config.jwtSecret, jwtConfig);
       res.json({ user, token });

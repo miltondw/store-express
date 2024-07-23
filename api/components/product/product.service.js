@@ -18,7 +18,7 @@ class ProductsService {
       include: ['category'],
       where: {},
     };
-    Object.entries(query).forEach(([key, value]) => {
+    Object?.entries(query).forEach(([key, value]) => {
       query[key] = Number(value);
     });
     const {
