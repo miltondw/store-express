@@ -1,5 +1,7 @@
 const express = require('express');
-const validatorHandler = require('../../middlewares/validator.handler');
+const validatorHandler = require('@middlewares/validator.handler');
+const passport = require('passport');
+
 const {
   getOrderSchema,
   createOrderSchema,
@@ -21,11 +23,22 @@ const router = express.Router();
 router.get('/', findAll);
 router.get('/:id', validatorHandler(getOrderSchema, 'params'), findOne);
 // * POST
-router.post('/', validatorHandler(createOrderSchema, 'body'), save);
-router.post('/add-item', validatorHandler(addItemSchema, 'body'), addItem);
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  validatorHandler(createOrderSchema, 'body'),
+  save,
+);
+router.post(
+  '/add-item',
+  passport.authenticate('jwt', { session: false }),
+  validatorHandler(addItemSchema, 'body'),
+  addItem,
+);
 // * PUT
 router.put(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getOrderSchema, 'params'),
   // validatorHandler(updateOrderSchema, 'body'),
   update,
@@ -33,11 +46,17 @@ router.put(
 // * PATCH
 router.patch(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getOrderSchema, 'params'),
   // validatorHandler(updateOrderSchema, 'body'),
   patch,
 );
 // * DELETE
-router.delete('/:id', validatorHandler(getOrderSchema, 'params'), destroy);
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  validatorHandler(getOrderSchema, 'params'),
+  destroy,
+);
 
 module.exports = router;

@@ -30,9 +30,36 @@ class OrdersService {
     return orderId;
   }
 
-  async create(data) {
-    return await models.Order.create(data);
+  async getByUser(userId) {
+    const orders = await models.Order.findAll({
+      where:{
+        '$customer.user.id$':userId
+      },include:[
+        {
+          association:'customer',
+          include:['user']
+        }
+      ]
+    });
+    if (!orders) {
+      throw boom.notFound('order with id:' + id + ' not found');
+    }
+    return orders;
   }
+
+  async create(data) {
+    const customer = await models.Customer.findOne({
+      where: {
+        '$user.id$': data.userId
+      },
+      include: ['user']
+    })
+    if (!customer) {
+      throw boom.badRequest('Customer not found');
+    }
+    return await models.Order.create({ customerId: customer.id });
+  }
+    
   async addItem(data) {
     const productId= await models.Product.findByPk(data.productId)
     if (!productId) {

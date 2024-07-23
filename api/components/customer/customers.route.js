@@ -1,5 +1,7 @@
 const express = require('express');
-const validatorHandler = require('./../../middlewares/validator.handler');
+const validatorHandler = require('@middlewares/validator.handler');
+const { checkPermission } = require('@middlewares/auth.handler');
+const passport = require('passport');
 const {
   updateCustomerSchema,
   createCustomerSchema,
@@ -20,7 +22,12 @@ router.get('/', findAll);
 
 router.get('/:id', validatorHandler(getCustomerSchema, 'params'), findOne);
 
-router.post('/', validatorHandler(createCustomerSchema, 'body'), save);
+router.post('/', 
+  passport.authenticate('jwt', { session: false }),
+  checkPermission('createAny', 'customer'),
+  validatorHandler(createCustomerSchema, 'body'),
+  save
+);
 
 router.put(
   '/:id',

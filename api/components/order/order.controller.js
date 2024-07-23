@@ -15,14 +15,12 @@ const findAll = async (req, res, next) => {
       res.json(orders);
     }
 
-
-    if(!!orders.Object?.entries.length === 0){
+    if (!!orders.Object?.entries.length === 0) {
       res.status(404).json({
         message: 'no hay ordenes',
         data: { newOrder },
       });
-    }else{
-
+    } else {
       res.json(orders);
     }
   } catch (error) {
@@ -40,8 +38,11 @@ const findOne = async (req, res, next) => {
 };
 const save = async (req, res, next) => {
   try {
-    const body = req.body;
-    const newOrder = await service.create(body);
+    const user = req.user;
+    const data = {
+      userId: user.sub,
+    };
+    const newOrder = await service.create(data);
     res.status(201).json({
       message: 'Order Created',
       data: { newOrder },
@@ -58,6 +59,15 @@ const addItem = async (req, res, next) => {
       message: 'Item Created',
       data: { newItem },
     });
+  } catch (error) {
+    next(error);
+  }
+};
+const myOrders = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const orders = await service.getByUser(user.sub);
+    res.json(orders);
   } catch (error) {
     next(error);
   }
@@ -115,4 +125,13 @@ const destroy = async (req, res, next) => {
   }
 };
 
-module.exports = { findAll, findOne, save,addItem, update, patch, destroy };
+module.exports = {
+  findAll,
+  findOne,
+  save,
+  addItem,
+  update,
+  patch,
+  destroy,
+  myOrders,
+};
