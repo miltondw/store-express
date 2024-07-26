@@ -1,13 +1,18 @@
 const {config}=require('@api/config/config')
-const URI = config.urlMysql||`mysql://root:admin123@localhost:3306/my_store`;
+// const URI = config.urlMysql||`mysql://root:admin123@localhost:3306/my_store`;
 
 module.exports = {
   development: {
-    url: URI,
-    dialect: 'mysql',
+    url: config.dbUrl,
+    dialect: 'postgres',
   },
   production: {
-    url: URI,
-    dialect: 'mysql',
+    url: config.dbUrl,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false
+      }
+    }
   }
 }
