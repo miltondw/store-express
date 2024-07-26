@@ -1,7 +1,7 @@
 'use strict';
 
-const { CATEGORY_TABLE } = require('../../category/category.model');
-const { PRODUCT_TABLE } = require('../../product/product.model');
+const { CATEGORY_TABLE } = require('../../components/category/category.model');
+const { PRODUCT_TABLE } = require('../../components/product/product.model');
 
 module.exports = {
   async up(queryInterface, Sequelize) {

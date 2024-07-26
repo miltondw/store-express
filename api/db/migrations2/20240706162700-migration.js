@@ -1,11 +1,11 @@
 'use strict';
 
-const { UserSchema, USER_TABLE } = require('../models/user.model');
-const { ProductSchema, PRODUCT_TABLE } = require('../models/product.model');
-const { CategorySchema, CATEGORY_TABLE } = require('../models/category.model');
-const { CustomerSchema, CUSTOMER_TABLE } = require('../models/customer.model');
-const { OrderSchema, ORDER_TABLE } = require('../models/order.model');
-const { OrderProductSchema, ORDER_PRODUCT_TABLE } = require('../models/order-product.model');
+const { UserSchema, USER_TABLE } = require('../../components/user/user.model');
+const { ProductSchema, PRODUCT_TABLE } = require('../../components/product/product.model');
+const { CategorySchema, CATEGORY_TABLE } = require('../../components/category/category.model');
+const { CustomerSchema, CUSTOMER_TABLE } = require('../../components/customer/customer.model');
+const { OrderSchema, ORDER_TABLE } = require('../../components/order/order.model');
+const { OrderProductSchema, ORDER_PRODUCT_TABLE } = require('../../components/order/order-product.model');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -21,7 +21,7 @@ module.exports = {
     await queryInterface.addConstraint(PRODUCT_TABLE, {
       fields: ['category_id'],
       type: 'foreign key',
-      name: 'products_category_id_fk', // nombre opcional de la constraint
+      name: 'products_category_id_fk',
       references: {
         table: CATEGORY_TABLE,
         field: 'id',
@@ -33,7 +33,7 @@ module.exports = {
     await queryInterface.addConstraint(CUSTOMER_TABLE, {
       fields: ['user_id'],
       type: 'foreign key',
-      name: 'customers_user_id_fk', // nombre opcional de la constraint
+      name: 'customers_user_id_fk',
       references: {
         table: USER_TABLE,
         field: 'id',
@@ -45,7 +45,7 @@ module.exports = {
     await queryInterface.addConstraint(ORDER_TABLE, {
       fields: ['customer_id'],
       type: 'foreign key',
-      name: 'orders_customer_id_fk', // nombre opcional de la constraint
+      name: 'orders_customer_id_fk', 
       references: {
         table: CUSTOMER_TABLE,
         field: 'id',
@@ -57,7 +57,7 @@ module.exports = {
     await queryInterface.addConstraint(ORDER_PRODUCT_TABLE, {
       fields: ['order_id'],
       type: 'foreign key',
-      name: 'orders_products_order_id_fk', // nombre opcional de la constraint
+      name: 'orders_products_order_id_fk', 
       references: {
         table: ORDER_TABLE,
         field: 'id',
@@ -69,7 +69,7 @@ module.exports = {
     await queryInterface.addConstraint(ORDER_PRODUCT_TABLE, {
       fields: ['product_id'],
       type: 'foreign key',
-      name: 'orders_products_product_id_fk', // nombre opcional de la constraint
+      name: 'orders_products_product_id_fk',
       references: {
         table: PRODUCT_TABLE,
         field: 'id',

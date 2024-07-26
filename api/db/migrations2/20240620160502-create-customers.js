@@ -1,6 +1,6 @@
 'use strict';
 
-const { CustomerSchema, CUSTOMER_TABLE } = require('../../customer/customer.model');
+const { CustomerSchema, CUSTOMER_TABLE } = require('../../components/customer/customer.model');
 
 module.exports = {
   async up(queryInterface, Sequelize) {

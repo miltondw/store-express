@@ -3,7 +3,7 @@
 const {
   OrderProductSchema,
   ORDER_PRODUCT_TABLE,
-} = require('../../order/order-product.model');
+} = require('../../components/order/order-product.model');
 
 module.exports = {
   async up(queryInterface) {

@@ -1,6 +1,6 @@
 'use strict';
 
-const { OrderSchema, ORDER_TABLE } = require('../../order/order.model');
+const { OrderSchema, ORDER_TABLE } = require('../../components/order/order.model');
 
 module.exports = {
   async up(queryInterface) {
